@@ -7,33 +7,23 @@ import {
   IonButton,
   IonList,
   IonItem,
-  IonInput,
-  IonLabel
+  IonInput
 } from '@ionic/react';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../auth';
 import { auth } from '../firebase';
 
-interface Props {
-  onLogin: () => void;
-}
 
-const LoginPage: React.FC<Props> = ({ onLogin }) => {
+const RegisterPage: React.FC = () => {
   const [email, setEmailString] = useState('');
   const [password, setPassword] = useState('');
   const {loggedIn} = useAuth();
 
   const handleLogin = async () => {
-    try {
-    const credential = await auth.signInWithEmailAndPassword(email, password);
+    const credential = await auth.signInWithEmailAndPassword('bdchanbroset@gmail.com', 'Asd,car15');
     console.log('credential', credential);
-    onLogin();
-    } catch(error) {
-        console.log("Incorrect email or password!");
-    }
-    
+   
   }
   if (loggedIn) {
     return <Redirect to="/my/entries" />
@@ -42,7 +32,7 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login v1.0</IonTitle>
+          <IonTitle>Registration v1.0</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
@@ -55,15 +45,11 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
               <IonInput placeholder="password" type="password" value={password} onIonChange={(event) => setPassword(event.detail.value)} />
             </IonItem>
 
-            <IonItem>
-            <IonLabel>Do you already have account? <Link to="/register"> Register </Link> </IonLabel>
-            </IonItem>
-
         </IonList>
-        <IonButton expand="block" onClick={handleLogin}>Login</IonButton>
+        <IonButton expand="block" onClick={handleLogin}>Registration</IonButton>
       </IonContent>
     </IonPage>
   );
 }
 
-export default LoginPage;
+export default RegisterPage;

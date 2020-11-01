@@ -8,6 +8,7 @@ import { AuthContext } from './auth';
 import AppTabs from './AppTabs';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
+import RegisterPage from './pages/RegisterPage';
 
 
 const App: React.FC = () => {
@@ -22,6 +23,11 @@ const App: React.FC = () => {
             <Route exact path="/login">
               <LoginPage onLogin={() => setLoggedIn(true)} />
             </Route>
+
+            <Route exact path="/register">
+              <RegisterPage />
+            </Route>
+
 
             <Route path="/my" >
               <AppTabs />
