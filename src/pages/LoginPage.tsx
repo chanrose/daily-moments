@@ -49,7 +49,6 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
             </IonItem>
 
         </IonList>
-
         <IonButton expand="block" onClick={onLogin}>Login</IonButton>
       </IonContent>
     </IonPage>
