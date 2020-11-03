@@ -9,7 +9,8 @@ import {
   IonItem,
   IonInput,
   IonLabel,
-  IonText
+  IonText,
+  IonLoading
 } from '@ionic/react';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
@@ -24,15 +25,17 @@ interface Props {
 const LoginPage: React.FC<Props> = ({ onLogin }) => {
   const [email, setEmailString] = useState('');
   const [password, setPassword] = useState('');
+  const [status, setStatus] = useState({loading: false, error: false});
   const {loggedIn} = useAuth();
 
   const handleLogin = async () => {
     try {
-    const credential = await auth.signInWithEmailAndPassword(email, password);
-    console.log('credential', credential);
-    onLogin();
+      const credential = await auth.signInWithEmailAndPassword(email, password);
+      console.log('credential', credential);
+      onLogin();
     } catch(error) {
         console.log("Incorrect email or password!");
+        
     }
     
   }
@@ -52,6 +55,7 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
             <IonInput placeholder="Email" type="email" value={email} onIonChange={(event) => setEmailString(event.detail.value)} />
             </IonItem>
 
+
             <IonItem>
               <IonInput placeholder="password" type="password" value={password} onIonChange={(event) => setPassword(event.detail.value)} />
             </IonItem>
@@ -64,6 +68,9 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
         <IonButton expand="block" onClick={handleLogin}>Login</IonButton>
       </IonContent>
       <IonText color="danger">Invalid Credential</IonText>
+      <IonLoading isOpen={status}>
+
+      </IonLoading>
     </IonPage>
   );
 }
