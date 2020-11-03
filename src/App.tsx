@@ -11,14 +11,13 @@ import NotFoundPage from './pages/NotFoundPage';
 import RegisterPage from './pages/RegisterPage';
 import { auth } from './firebase';
 
-auth.onAuthStateChanged((user) => {
-  console.log('onAuthStateChanged:', user);
-});
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
-      
+    auth.onAuthStateChanged((user) => {
+      setLoggedIn(Boolean(user));      
+    });
   }, []);
   console.log(`Rendering app with loggedIn=${loggedIn}`);
   return (
@@ -28,7 +27,7 @@ const App: React.FC = () => {
           <Switch>
 
             <Route exact path="/login">
-              <LoginPage onLogin={() => setLoggedIn(true)} />
+              <LoginPage />
             </Route>
 
             <Route exact path="/register">

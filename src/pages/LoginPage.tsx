@@ -18,23 +18,16 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../auth';
 import { auth } from '../firebase';
 
-interface Props {
-  onLogin: () => void;
-}
-
-const LoginPage: React.FC<Props> = ({ onLogin }) => {
+const LoginPage: React.FC = () => {
   const [email, setEmailString] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState({loading: false, error: false});
   const {loggedIn} = useAuth();
-
   const handleLogin = async () => {
     try {
       setStatus({loading: true, error: false})
       const credential = await auth.signInWithEmailAndPassword(email, password);
-      setStatus({loading: false, error: false})
       console.log('credential', credential);
-      onLogin();
 
     } catch(error) {
         setStatus({loading: false, error: true})
@@ -50,7 +43,7 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login v3.0</IonTitle>
+          <IonTitle>Login v3.1</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
