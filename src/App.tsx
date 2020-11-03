@@ -1,5 +1,5 @@
 import {
-  IonApp,
+  IonApp, IonLoading,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import React, { useEffect, useState } from 'react';
@@ -13,16 +13,20 @@ import { auth } from './firebase';
 
 
 const App: React.FC = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [authState, setAuthState] = useState({loading: true, loggedIn: false});
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      setLoggedIn(Boolean(user));      
+    setAuthState({loading: false, loggedIn: Boolean(user)});      
     });
   }, []);
-  console.log(`Rendering app with loggedIn=${loggedIn}`);
+  console.log(`Rendering app with loggedIn=${authState.loading}`);
+if (authState.loading) {
+  return <IonLoading isOpen />;
+}
+
   return (
     <IonApp>
-      <AuthContext.Provider value={{ loggedIn }} >
+      <AuthContext.Provider value={{ loggedIn: authState.loggedIn}} >
         <IonReactRouter>
           <Switch>
 
