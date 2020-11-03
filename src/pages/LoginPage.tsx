@@ -42,7 +42,7 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login v1.0</IonTitle>
+          <IonTitle>Login v2.0</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
