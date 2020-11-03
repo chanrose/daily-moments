@@ -19,13 +19,10 @@ const SettingsPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        Go to <IonRouterLink routerLink="/entries">Home</IonRouterLink>
-        <br /> This is the settings page.
         <IonButton 
           color="medium" 
           expand="block"
-          onClick={() => auth.signOut()}
-          >
+          onClick={() => auth.signOut()}>
             Logout</IonButton>
       </IonContent>
     </IonPage>

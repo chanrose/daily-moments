@@ -57,10 +57,6 @@ const LoginPage: React.FC = () => {
               <IonInput placeholder="password" type="password" value={password} onIonChange={(event) => setPassword(event.detail.value)} />
             </IonItem>
 
-            <IonItem>
-            <IonLabel>Do you already have account? <Link to="/register"> Register </Link> </IonLabel>
-            </IonItem>
-
             {status.error &&
             <IonItem>
                 <IonText color="danger">Invalid Credential</IonText>
@@ -71,6 +67,7 @@ const LoginPage: React.FC = () => {
         </IonList>
         
         <IonButton expand="block" onClick={handleLogin}>Login</IonButton>
+        <IonButton expand="block" fill="clear" routerLink="/register">Create Account</IonButton>
       </IonContent>
       
       <IonLoading isOpen={status.loading} />
