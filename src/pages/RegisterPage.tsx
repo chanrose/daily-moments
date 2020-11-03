@@ -8,13 +8,11 @@ import {
   IonList,
   IonItem,
   IonInput,
-  IonLabel,
   IonText,
   IonLoading
 } from '@ionic/react';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../auth';
 import { auth } from '../firebase';
 
@@ -43,7 +41,7 @@ const RegisterPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Registration Page v3.4</IonTitle>
+          <IonTitle>Registration Page v3.5</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
