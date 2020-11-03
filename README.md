@@ -1,3 +1,3 @@
-# Daily Moments v3.0
+# Daily Moments v3.0 in November 03, 2020
 
 #### Added Invalid credential + logic
