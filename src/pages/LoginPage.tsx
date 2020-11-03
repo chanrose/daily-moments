@@ -8,7 +8,8 @@ import {
   IonList,
   IonItem,
   IonInput,
-  IonLabel
+  IonLabel,
+  IonText
 } from '@ionic/react';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
@@ -58,10 +59,11 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
             <IonItem>
             <IonLabel>Do you already have account? <Link to="/register"> Register </Link> </IonLabel>
             </IonItem>
-
+            
         </IonList>
         <IonButton expand="block" onClick={handleLogin}>Login</IonButton>
       </IonContent>
+      <IonText color="danger">Invalid Credential</IonText>
     </IonPage>
   );
 }
