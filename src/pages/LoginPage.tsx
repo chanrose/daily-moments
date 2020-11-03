@@ -30,12 +30,16 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
 
   const handleLogin = async () => {
     try {
+      setStatus({loading: true, error: false})
       const credential = await auth.signInWithEmailAndPassword(email, password);
+      setStatus({loading: false, error: false})
       console.log('credential', credential);
       onLogin();
+
     } catch(error) {
+        setStatus({loading: false, error: true})
         console.log("Incorrect email or password!");
-        
+        console.log('error: ', error);
     }
     
   }
@@ -46,7 +50,7 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login v1.0</IonTitle>
+          <IonTitle>Login v3.0</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
@@ -63,14 +67,20 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
             <IonItem>
             <IonLabel>Do you already have account? <Link to="/register"> Register </Link> </IonLabel>
             </IonItem>
+
+            {status.error &&
+            <IonItem>
+                <IonText color="danger">Invalid Credential</IonText>
+            </IonItem>
+             }
+
             
         </IonList>
+        
         <IonButton expand="block" onClick={handleLogin}>Login</IonButton>
       </IonContent>
-      <IonText color="danger">Invalid Credential</IonText>
-      <IonLoading isOpen={status}>
-
-      </IonLoading>
+      
+      <IonLoading isOpen={status.loading} />
     </IonPage>
   );
 }
