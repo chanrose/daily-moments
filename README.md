@@ -1,3 +1,3 @@
-# v3.0
+# Daily Moments v3.0
 
 #### Added Invalid credential + logic
