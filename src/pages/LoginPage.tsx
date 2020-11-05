@@ -19,6 +19,7 @@ import { useAuth } from '../auth';
 import { auth } from '../firebase';
 
 const LoginPage: React.FC = () => {
+ const [errorName, setErr] = useState({Err: ''});
   const [email, setEmailString] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState({loading: false, error: false});
@@ -33,6 +34,10 @@ const LoginPage: React.FC = () => {
         setStatus({loading: false, error: true})
         console.log("Incorrect email or password!");
         console.log('error: ', error);
+        console.log('Error from', error.message);
+        setErr({Err: `${error.message}`});
+        console.log("Error Code is: "+errorName.Err);
+        
     }
     
   }
@@ -59,7 +64,7 @@ const LoginPage: React.FC = () => {
 
             {status.error &&
             <IonItem>
-                <IonText color="danger">Invalid Credential</IonText>
+                <IonText color="danger">{errorName.Err}</IonText>
             </IonItem>
              }
 

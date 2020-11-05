@@ -17,6 +17,7 @@ import { useAuth } from '../auth';
 import { auth } from '../firebase';
 
 const RegisterPage: React.FC = () => {
+  const [errorName, setErr] = useState({Err: ''});
   const [email, setEmailString] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState({loading: false, error: false});
@@ -26,11 +27,12 @@ const RegisterPage: React.FC = () => {
       setStatus({loading: true, error: false})
       const credential = await auth.createUserWithEmailAndPassword(email, password);
       console.log('credential', credential);
+      
 
     } catch(error) {
-        setStatus({loading: false, error: true})
-        console.log("An email is already being used");
+        setStatus({loading: false, error: true});
         console.log('error: ', error);
+        setErr({Err: `${error.message}`});
     }
     
   }
@@ -57,7 +59,7 @@ const RegisterPage: React.FC = () => {
             
             {status.error &&
             <IonItem>
-                <IonText color="danger">Registration failed!</IonText>
+                <IonText color="danger">{errorName.Err}</IonText>
             </IonItem>
              }
             
