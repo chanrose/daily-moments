@@ -1,10 +1,10 @@
 import {
-  IonApp,
+  IonApp, IonLoading,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import React, { useState } from 'react';
+import React, {  } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { AuthContext } from './auth';
+import { AuthContext, useAuthInit } from './auth';
 import AppTabs from './AppTabs';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -12,16 +12,20 @@ import RegisterPage from './pages/RegisterPage';
 
 
 const App: React.FC = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  console.log(`Rendering app with loggedIn=${loggedIn}`);
+  const {loading, auth} = useAuthInit();
+  if (loading) {
+    return <IonLoading isOpen />;
+  }
+  console.log(`Rendering app with auth:`, auth);
+
   return (
     <IonApp>
-      <AuthContext.Provider value={{ loggedIn }} >
+      <AuthContext.Provider value={auth} >
         <IonReactRouter>
           <Switch>
 
             <Route exact path="/login">
-              <LoginPage onLogin={() => setLoggedIn(true)} />
+              <LoginPage />
             </Route>
 
             <Route exact path="/register">
