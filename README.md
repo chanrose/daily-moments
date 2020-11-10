@@ -9,3 +9,4 @@
 - Working with firebase.ts, registerPage, loginPage.
 - Working with firestore with interface
 - Updating firestore database
+- Check (https://codeshare.io/GbZ8xq) 
