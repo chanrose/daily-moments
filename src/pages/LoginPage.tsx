@@ -37,7 +37,6 @@ const LoginPage: React.FC = () => {
         console.log('Error from', error.message);
         setErr({Err: `${error.message}`});
         console.log("Error Code is: "+errorName.Err);
-        
     }
     
   }
