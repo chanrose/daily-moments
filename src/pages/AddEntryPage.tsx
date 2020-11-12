@@ -20,14 +20,12 @@ const AddEntryPage: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle>{entry?.title} </IonTitle>
+          <IonTitle> Adding Entries </IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent className="ion-padding">
-         {entry?.description} : #{entry?.id
-         }
- 
+
       </IonContent>
     </IonPage >
   );

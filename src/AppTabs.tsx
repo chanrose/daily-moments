@@ -13,6 +13,7 @@ import { Redirect, Route } from 'react-router-dom';
 import React from 'react';
 import EntryPage from './pages/EntryPage';
 import { useAuth } from './auth';
+import AddEntryPage from './pages/AddEntryPage';
 
 const AppTabs: React.FC = () => {
   const { loggedIn } = useAuth();
@@ -31,6 +32,9 @@ const AppTabs: React.FC = () => {
         </Route>
         <Route exact path="/my/settings">
           <Settings />
+        </Route>
+        <Route exact path="/my/entries/add">
+          <AddEntryPage />
         </Route>
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
