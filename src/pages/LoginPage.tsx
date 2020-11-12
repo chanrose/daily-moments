@@ -30,6 +30,7 @@ const LoginPage: React.FC = () => {
       const credential = await auth.signInWithEmailAndPassword(email, password);
       console.log('credential', credential);
 
+
     } catch(error) {
         setStatus({loading: false, error: true})
         console.log("Incorrect email or password!");
@@ -47,7 +48,7 @@ const LoginPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login v3.1</IonTitle>
+          <IonTitle>Login v3.8</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
