@@ -31,27 +31,7 @@ const AddEntryPage: React.FC = () => {
       </IonHeader>
 
       <IonContent className="ion-padding">
-      <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton>
-            <IonIcon icon={add} />
-          </IonFabButton>
-          <IonFabList side="start">
-            <IonFabButton>
-              <IonIcon icon={bicycle} />
-            </IonFabButton>
-            <IonFabButton>
-              <IonIcon icon={car} />
-            </IonFabButton>
-          </IonFabList>
-          <IonFabList side="top">
-            <IonFabButton>
-              <IonIcon icon={ticket} />
-            </IonFabButton>
-            <IonFabButton>
-              <IonIcon icon={easel} />
-            </IonFabButton>
-          </IonFabList>
-        </IonFab>
+     
       </IonContent>
     </IonPage >
   );
