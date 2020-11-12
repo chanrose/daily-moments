@@ -8,15 +8,19 @@ import {
   IonItem
 } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../auth';
 // import { entries } from '../data';
 import {firestore} from '../firebase';
 import { Entry, toEntry } from '../model';
 
 const HomePage: React.FC = () => {
+  const {userId} = useAuth();
+  console.log('This user is logged in homepage', userId);
+
   const [entries, setEntries] = useState<Entry[]>([]);
   useEffect(() => {
-    const entriesRef = firestore.collection('entries');
-      entriesRef
+    const entriesRef = firestore.collection('users').doc(userId).collection('entries');
+    entriesRef
       .get()
       .then(({docs}) => setEntries(docs.map(toEntry)));
 
@@ -28,7 +32,7 @@ const HomePage: React.FC = () => {
       setEntries(entries);
     });
      */
-  }, []);
+  }, [userId]);
   return (
     <IonPage>
       <IonHeader>
@@ -41,7 +45,7 @@ const HomePage: React.FC = () => {
           {entries.map((entry) =>
             <IonItem button key={entry.id}
               routerLink={`/my/entries/${entry.id}`}>
-              {entry.title}
+              Title: {entry.title}
             </IonItem>
           )}
         </IonList>
