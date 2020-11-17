@@ -5,14 +5,20 @@ import {
   IonTitle,
   IonToolbar,
   IonButtons,
-  IonBackButton
+  IonBackButton,
+  IonFab,
+  IonFabButton,
+  IonFabList,
+  IonIcon
 } from '@ionic/react';
+import { add, bicycle, car, ticket, easel } from 'ionicons/icons';
 import React, {  } from 'react';
 
 
 
 
 const AddEntryPage: React.FC = () => {
+  console.log('Adding Page: ', this);
   return (
     <IonPage>
       <IonHeader>
@@ -25,7 +31,7 @@ const AddEntryPage: React.FC = () => {
       </IonHeader>
 
       <IonContent className="ion-padding">
-
+     
       </IonContent>
     </IonPage >
   );

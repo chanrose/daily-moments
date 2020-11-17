@@ -5,8 +5,13 @@ import {
   IonTitle,
   IonToolbar,
   IonList,
-  IonItem
+  IonItem,
+  IonFab,
+  IonFabButton,
+  IonFabList,
+  IonIcon
 } from '@ionic/react';
+import { add, bicycle, car, ticket, easel } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../auth';
 // import { entries } from '../data';
@@ -44,11 +49,17 @@ const HomePage: React.FC = () => {
         <IonList>
           {entries.map((entry) =>
             <IonItem button key={entry.id}
-              routerLink={`/my/entries/${entry.id}`}>
+              routerLink={`/my/entries/view/${entry.id}`}>
               Title: {entry.title}
             </IonItem>
           )}
         </IonList>
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton routerLink="/my/entries/add">
+            <IonIcon icon={add} />
+          </IonFabButton>
+        
+        </IonFab>
       </IonContent>
     </IonPage >
   );
