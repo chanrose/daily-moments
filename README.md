@@ -10,4 +10,7 @@
 - Working with firestore with interface
 - Updating firestore database
 - Working on firestore's collection and document
+- Sorting entries by descending
+- Adding and deleting entries
+
 - Check (https://codeshare.io/GbZ8xq) 

@@ -2,7 +2,8 @@ export interface Entry {
     map(arg0: (entry: any) => JSX.Element): import("react").ReactNode;
     id: string,
     title: string,
-    description: string
+    description: string,
+    date: string
 }
 
 export function toEntry(doc): Entry {

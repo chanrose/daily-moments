@@ -26,7 +26,10 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const entriesRef = firestore.collection('users').doc(userId).collection('entries');
     
-      return entriesRef.onSnapshot(({docs}) => setEntries(docs.map(toEntry)));
+      return entriesRef
+      .orderBy('date', 'desc')
+      .limit(7)
+      .onSnapshot(({docs}) => setEntries(docs.map(toEntry)));
 
 /*     entriesRef.get().then((snapshot) => {
       const entries = snapshot.docs.map((doc) => ({
