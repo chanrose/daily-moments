@@ -6,19 +6,34 @@ import {
   IonToolbar,
   IonButtons,
   IonBackButton,
-  IonFab,
-  IonFabButton,
-  IonFabList,
-  IonIcon
+  IonInput,
+  IonButton,
+  IonList,
+  IonItem,
+  IonTextarea
 } from '@ionic/react';
-import { add, bicycle, car, ticket, easel } from 'ionicons/icons';
-import React, {  } from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import { useAuth } from '../auth';
+import { firestore } from '../firebase';
 
 
 
 
 const AddEntryPage: React.FC = () => {
-  console.log('Adding Page: ', this);
+  const { userId } = useAuth();
+  const history = useHistory();
+  const handleSave = () => {
+    firestore.collection("users").doc(userId).collection("entries")
+      .add({
+        description: description,
+        title: title
+      });
+      history.goBack();
+
+  }
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   return (
     <IonPage>
       <IonHeader>
@@ -31,7 +46,15 @@ const AddEntryPage: React.FC = () => {
       </IonHeader>
 
       <IonContent className="ion-padding">
-     
+        <IonList>
+          <IonItem><IonInput type="text" value={title} onIonChange={(e) => setTitle(e.detail.value)} placeholder="Title: " />
+          </IonItem>
+          <IonItem><IonTextarea value={description} onIonChange={(e) => setDescription(e.detail.value)} placeholder="message" /></IonItem>
+          
+        </IonList>
+
+        <IonButton type="submit" onClick={handleSave} routerLink="/my/entries"> Submit </IonButton>
+
       </IonContent>
     </IonPage >
   );
