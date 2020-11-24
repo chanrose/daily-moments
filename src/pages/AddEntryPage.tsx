@@ -10,7 +10,8 @@ import {
   IonButton,
   IonList,
   IonItem,
-  IonTextarea
+  IonTextarea,
+  IonDatetime
 } from '@ionic/react';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
@@ -27,13 +28,16 @@ const AddEntryPage: React.FC = () => {
     firestore.collection("users").doc(userId).collection("entries")
       .add({
         description: description,
-        title: title
+        title: title,
+        date: selectedDate
       });
       history.goBack();
 
   }
+  const [selectedDate, setSelectedDate] = useState<string>('');  
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  
   return (
     <IonPage>
       <IonHeader>
@@ -50,7 +54,7 @@ const AddEntryPage: React.FC = () => {
           <IonItem><IonInput type="text" value={title} onIonChange={(e) => setTitle(e.detail.value)} placeholder="Title: " />
           </IonItem>
           <IonItem><IonTextarea value={description} onIonChange={(e) => setDescription(e.detail.value)} placeholder="message" /></IonItem>
-          
+          <IonDatetime value={selectedDate} onIonChange={(e) => setSelectedDate(e.detail.value)} placeholder="Date: " />
         </IonList>
 
         <IonButton type="submit" onClick={handleSave} routerLink="/my/entries"> Submit </IonButton>
