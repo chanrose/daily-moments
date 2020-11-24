@@ -21,7 +21,6 @@ import { useHistory, useRouteMatch } from "react-router";
 import { useAuth } from "../auth";
 import { firestore } from "../firebase";
 import { Entry, formatDate, toEntry } from "../model";
-import dayjs from "dayjs";
 
 // import { useParams } from 'react-router';
 // import { entries } from '../data';
@@ -36,7 +35,8 @@ const EntryPage: React.FC = () => {
   const { id } = match.params;
   const [entry, setEntry] = useState<Entry>();
   const history = useHistory();
-  const [tile, setTile] = useState(entry?.title);
+  const [title, setTitle] = useState(entry?.title);
+  const [description, setDescription] = useState(entry?.description);
 
   useEffect(() => {
     const entryRef = firestore
@@ -61,15 +61,16 @@ const EntryPage: React.FC = () => {
     history.goBack();
   };
 
-  const handleSave = () => {
-    firestore
+  const handleSave = async () => {
+    const entriesRef = firestore
       .collection("users")
       .doc(userId)
       .collection("entries")
-      .doc(entry.id)
-      .update({
-        title: tile,
-      });
+      .doc(entry.id);
+    const entryRef = await entriesRef.update({
+      title: title,
+      description: description,
+    });
     history.goBack();
   };
 
@@ -98,9 +99,26 @@ const EntryPage: React.FC = () => {
         <p>{entry?.description}</p>
         <IonList>
           <IonItem>
-            <IonInput value={tile} />
+            <IonInput
+              placeholder={entry?.title}
+              value={title}
+              onIonChange={(e) => setTitle(e.detail.value ?? entry?.title!)}
+            />
+          </IonItem>
+          <IonItem>
+            <IonInput
+              placeholder={entry?.description}
+              value={description}
+              onIonChange={(e) =>
+                setDescription(e.detail.value ?? entry?.description!)
+              }
+            />
           </IonItem>
         </IonList>
+        <IonButton expand="full" type="submit" onClick={handleSave}>
+          {" "}
+          SAVE{" "}
+        </IonButton>
       </IonContent>
     </IonPage>
   );

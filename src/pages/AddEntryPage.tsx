@@ -127,12 +127,7 @@ const AddEntryPage: React.FC = () => {
           </IonItem>
         </IonList>
 
-        <IonButton
-          expand="full"
-          type="submit"
-          onClick={handleSave}
-          routerLink="/my/entries"
-        >
+        <IonButton expand="full" type="submit" onClick={handleSave}>
           {" "}
           SAVE{" "}
         </IonButton>
