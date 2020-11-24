@@ -9,14 +9,16 @@ import {
   IonFab,
   IonFabButton,
   IonFabList,
-  IonIcon
+  IonIcon,
+  IonLabel
 } from '@ionic/react';
 import { add, bicycle, car, ticket, easel } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../auth';
 // import { entries } from '../data';
 import {firestore} from '../firebase';
-import { Entry, toEntry } from '../model';
+import { Entry, formatDate, toEntry } from '../model';
+
 
 const HomePage: React.FC = () => {
   const {userId} = useAuth();
@@ -52,7 +54,7 @@ const HomePage: React.FC = () => {
           {entries.map((entry) =>
             <IonItem button key={entry.id}
               routerLink={`/my/entries/view/${entry.id}`}>
-              Title: {entry.title}
+              <IonLabel><h2>{formatDate(entry.date)}:</h2> <h3>{entry.title}</h3></IonLabel>
             </IonItem>
           )}
         </IonList>

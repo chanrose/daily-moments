@@ -9,3 +9,12 @@ export interface Entry {
 export function toEntry(doc): Entry {
     return { id: doc.id, ...doc.data() };
 }
+
+export const formatDate = (ISOstring:string) => {
+    const dayjs = require('dayjs');
+    const date = dayjs(ISOstring);
+    date.toISOString();
+    return (
+      date.format('MMM-DD-YYYY')
+    );
+  }
