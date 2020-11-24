@@ -1,8 +1,8 @@
-# Daily Moments v3.0 in November 10, 2020
+# Daily Moments v4.0 in 241120202200
 
 - Added Invalid credential + logic
 - Added Logout button + logic
-- Added registration page + logic 
+- Added registration page + logic
 - Updated with Auth with UserID
 - Retrieving data from firestore/firebase
 - Using useState to show the specific error
@@ -12,5 +12,6 @@
 - Working on firestore's collection and document
 - Sorting entries by descending
 - Adding and deleting entries
+- Adding Picture to Entry
 
-- Check (https://codeshare.io/GbZ8xq) 
+- Check (https://codeshare.io/GbZ8xq)

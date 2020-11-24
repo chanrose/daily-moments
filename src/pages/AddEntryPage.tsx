@@ -11,33 +11,68 @@ import {
   IonList,
   IonItem,
   IonTextarea,
-  IonDatetime
-} from '@ionic/react';
-import React, { useState } from 'react';
-import { useHistory } from 'react-router';
-import { useAuth } from '../auth';
-import { firestore } from '../firebase';
+  IonDatetime,
+  IonLabel,
+} from "@ionic/react";
+import { url } from "inspector";
+import React, { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router";
+import { useAuth } from "../auth";
+import { firestore, storage } from "../firebase";
 
-
-
+async function savePicture(blobUrl, userId) {
+  const pictureRef = storage.ref(`/users/${userId}/pictures/${Date.now()}`);
+  const response = await fetch(blobUrl);
+  const blob = await response.blob();
+  const snapshot = await pictureRef.put(blob);
+  const url = await snapshot.ref.getDownloadURL();
+  return url;
+}
 
 const AddEntryPage: React.FC = () => {
   const { userId } = useAuth();
   const history = useHistory();
-  const handleSave = () => {
-    firestore.collection("users").doc(userId).collection("entries")
-      .add({
-        description: description,
-        title: title,
-        date: selectedDate
-      });
-      history.goBack();
+  const [date, setSelectedDate] = useState<string>("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("/assets/placeholder.png");
+  const fileInputRef = useRef<HTMLInputElement>();
 
-  }
-  const [selectedDate, setSelectedDate] = useState<string>('');  
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  
+  useEffect(
+    () => () => {
+      if (pictureUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(pictureUrl);
+      }
+    },
+    [pictureUrl]
+  );
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files.length > 0) {
+      const file = event.target.files.item(0);
+      const pictureUrl1 = URL.createObjectURL(file);
+      console.log("Created URL:", pictureUrl1);
+      setPictureUrl(pictureUrl1);
+    }
+  };
+
+  const handleSave = async () => {
+    const entriesRef = firestore
+      .collection("users")
+      .doc(userId)
+      .collection("entries");
+    const entryData = {
+      description,
+      title,
+      date,
+      pictureUrl,
+    };
+    if (pictureUrl.startsWith("blob:")) {
+      entryData.pictureUrl = await savePicture(pictureUrl, userId);
+    }
+    const entryRef = await entriesRef.add(entryData);
+    history.goBack();
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -51,16 +86,58 @@ const AddEntryPage: React.FC = () => {
 
       <IonContent className="ion-padding">
         <IonList>
-          <IonItem><IonInput type="text" value={title} onIonChange={(e) => setTitle(e.detail.value)} placeholder="Title: " />
+          <IonItem>
+            <IonDatetime
+              value={date}
+              onIonChange={(e) => setSelectedDate(e.detail.value)}
+              placeholder="Date: "
+            />
           </IonItem>
-          <IonItem><IonTextarea value={description} onIonChange={(e) => setDescription(e.detail.value)} placeholder="message" /></IonItem>
-          <IonDatetime value={selectedDate} onIonChange={(e) => setSelectedDate(e.detail.value)} placeholder="Date: " />
+          <IonItem>
+            <IonInput
+              type="text"
+              value={title}
+              onIonChange={(e) => setTitle(e.detail.value)}
+              placeholder="Title: "
+            />
+          </IonItem>
+
+          <IonItem>
+            <IonLabel position="stacked">Picture</IonLabel> <br />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              ref={fileInputRef}
+              hidden
+            />
+            <img
+              onClick={() => fileInputRef.current.click()}
+              src={pictureUrl}
+              alt="placeholder"
+              style={{ cursor: "pointer" }}
+            />
+          </IonItem>
+          <IonItem>
+            <IonTextarea
+              value={description}
+              onIonChange={(e) => setDescription(e.detail.value)}
+              placeholder="Description"
+            />
+          </IonItem>
         </IonList>
 
-        <IonButton type="submit" onClick={handleSave} routerLink="/my/entries"> Submit </IonButton>
-
+        <IonButton
+          expand="full"
+          type="submit"
+          onClick={handleSave}
+          routerLink="/my/entries"
+        >
+          {" "}
+          SAVE{" "}
+        </IonButton>
       </IonContent>
-    </IonPage >
+    </IonPage>
   );
 };
 
