@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "ionic serve",
+    "start": "CI='' ionic serve",
     "build": "ionic build"
   },
   "dependencies": {
