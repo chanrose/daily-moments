@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "ionic serve",
-    "build": "ionic build"
+    "build": "CI='' && ionic build"
   },
   "dependencies": {
     "@capacitor/android": "2.4.2",
