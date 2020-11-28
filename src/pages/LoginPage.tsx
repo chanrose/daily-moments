@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login 241120202200</IonTitle>
+          <IonTitle>Login Page 1</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">

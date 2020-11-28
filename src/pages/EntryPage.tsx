@@ -37,40 +37,55 @@ const EntryPage: React.FC = () => {
   const history = useHistory();
   const [title, setTitle] = useState(entry?.title);
   const [description, setDescription] = useState(entry?.description);
+  const entryRef = firestore
+    .collection("users")
+    .doc(userId)
+    .collection("entries")
+    .doc(id);
 
   useEffect(() => {
-    const entryRef = firestore
-      .collection("users")
-      .doc(userId)
-      .collection("entries")
-      .doc(id);
+    /*  const entryRef = firestore
+    .collection("users")
+    .doc(userId)
+    .collection("entries")
+    .doc(id); */
     entryRef.get().then((doc) => {
       setEntry(toEntry(doc));
     });
   }, [userId, id]);
 
   const handleDelete = async () => {
-    const entryRef = firestore
+    /*     const entryRef = firestore
       .collection("users")
       .doc(userId)
       .collection("entries")
-      .doc(entry.id);
+      .doc(entry.id); */
     await entryRef.delete().then(() => {
       console.log("Deleted!");
     });
-    history.goBack();
   };
 
   const handleSave = async () => {
-    const entriesRef = firestore
+    /*     const entriesRef = firestore
       .collection("users")
       .doc(userId)
       .collection("entries")
-      .doc(entry.id);
-    const entryRef = await entriesRef.update({
-      title: title,
-      description: description,
-    });
+      .doc(entry.id); */
+    /*     if (title == undefined || title.length < 3) {
+      setTitle(entry?.title);
+    }*/
+
+    /*   if (description == undefined || description.length < 3) {
+      setDescription(entry?.description);
+    } */
+
+    console.log("title", title);
+    console.log("description", description);
+    if (title != undefined)
+      await entryRef.update({
+        title,
+      });
+    if (description != undefined) await entryRef.update({ description });
     history.goBack();
   };
 
@@ -109,9 +124,7 @@ const EntryPage: React.FC = () => {
             <IonInput
               placeholder={entry?.description}
               value={description}
-              onIonChange={(e) =>
-                setDescription(e.detail.value ?? entry?.description!)
-              }
+              onIonChange={(e) => setDescription(e.detail.value)}
             />
           </IonItem>
         </IonList>
