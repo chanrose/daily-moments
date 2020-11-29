@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login Page 1</IonTitle>
+          <IonTitle>Login Page</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">

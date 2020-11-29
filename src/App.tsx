@@ -1,29 +1,25 @@
-import {
-  IonApp, IonLoading,
-} from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import React, {  } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { AuthContext, useAuthInit } from './auth';
-import AppTabs from './AppTabs';
-import LoginPage from './pages/LoginPage';
-import NotFoundPage from './pages/NotFoundPage';
-import RegisterPage from './pages/RegisterPage';
-
+import { getPlatforms, IonApp, IonLoading } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import React from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { AuthContext, useAuthInit } from "./auth";
+import AppTabs from "./AppTabs";
+import LoginPage from "./pages/LoginPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import RegisterPage from "./pages/RegisterPage";
 
 const App: React.FC = () => {
-  const {loading, auth} = useAuthInit();
+  const { loading, auth } = useAuthInit();
   if (loading) {
     return <IonLoading isOpen />;
   }
-  console.log(`Rendering app with auth:`, auth);
+  console.log(`Platforms: `, getPlatforms());
 
   return (
     <IonApp>
-      <AuthContext.Provider value={auth} >
+      <AuthContext.Provider value={auth}>
         <IonReactRouter>
           <Switch>
-
             <Route exact path="/login">
               <LoginPage />
             </Route>
@@ -32,8 +28,7 @@ const App: React.FC = () => {
               <RegisterPage />
             </Route>
 
-
-            <Route path="/my" >
+            <Route path="/my">
               <AppTabs />
             </Route>
 
@@ -42,7 +37,6 @@ const App: React.FC = () => {
             <Route>
               <NotFoundPage />
             </Route>
-
           </Switch>
         </IonReactRouter>
       </AuthContext.Provider>
