@@ -1,3 +1,4 @@
+import { CameraResultType, CameraSource, Plugins } from "@capacitor/core";
 import {
   IonContent,
   IonHeader,
@@ -13,12 +14,15 @@ import {
   IonTextarea,
   IonDatetime,
   IonLabel,
+  isPlatform,
 } from "@ionic/react";
 import { url } from "inspector";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import { useAuth } from "../auth";
 import { firestore, storage } from "../firebase";
+
+const { Camera } = Plugins;
 
 async function savePicture(blobUrl, userId) {
   const pictureRef = storage.ref(`/users/${userId}/pictures/${Date.now()}`);
@@ -55,6 +59,23 @@ const AddEntryPage: React.FC = () => {
     }
   };
 
+  const handlePictureClick = async () => {
+    // fileInputRef.current.click();
+    if (isPlatform("capacitor")) {
+      try {
+        const photo = await Camera.getPhoto({
+          resultType: CameraResultType.Uri,
+          source: CameraSource.Prompt,
+          width: 600,
+        });
+        setPictureUrl(photo.webPath);
+      } catch (error) {
+        console.log("Camera error:", error);
+      }
+    } else {
+      fileInputRef.current.click();
+    }
+  };
   const handleSave = async () => {
     const entriesRef = firestore
       .collection("users")
@@ -66,7 +87,7 @@ const AddEntryPage: React.FC = () => {
       date,
       pictureUrl,
     };
-    if (pictureUrl.startsWith("blob:")) {
+    if (!pictureUrl.startsWith("/assets")) {
       entryData.pictureUrl = await savePicture(pictureUrl, userId);
     }
     const entryRef = await entriesRef.add(entryData);
@@ -80,7 +101,7 @@ const AddEntryPage: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle> Adding Entries </IonTitle>
+          <IonTitle> Adding Entries Page 1 </IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -112,7 +133,7 @@ const AddEntryPage: React.FC = () => {
               hidden
             />
             <img
-              onClick={() => fileInputRef.current.click()}
+              onClick={handlePictureClick}
               src={pictureUrl}
               alt="placeholder"
               style={{ cursor: "pointer" }}
